@@ -33,7 +33,7 @@ export const App: React.FC = () => {
         goodsAPI.getRedGoods().then(newGoods => setGoods(newGoods));
         break;
     }
-  }, [sotedType, GoodSortType]);
+  }, [sotedType]);
 
   return (
     <div className="App">
