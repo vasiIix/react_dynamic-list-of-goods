@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './App.scss';
-import { GoodsList } from './GoodsList';
+import { GoodsListMemo } from './GoodsList';
 
 // import { getAll, get5First, getRed } from './api/goods';
 // or
@@ -63,7 +63,7 @@ export const App: React.FC = () => {
         Load red goods
       </button>
 
-      {goods.length && <GoodsList goods={goods} />}
+      {goods.length > 0 && <GoodsListMemo goods={goods} />}
     </div>
   );
 };
