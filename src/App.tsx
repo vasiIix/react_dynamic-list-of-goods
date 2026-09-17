@@ -9,27 +9,31 @@ import { Good } from './types/Good';
 
 export const App: React.FC = () => {
   enum GoodSortType {
-    all = 'all',
-    firsFive = 'firsFive',
-    redColor = 'redColor',
+    Empty = 'empty',
+    All = 'all',
+    FirsFive = 'firsFive',
+    RedColor = 'redColor',
   }
 
-  const [sotedType, setSortedType] = useState<GoodSortType>(GoodSortType.all);
-  const [goods, setGoods] = useState<Good[] | null>(null);
+  const [sotedType, setSortedType] = useState<GoodSortType>(GoodSortType.Empty);
+  const [goods, setGoods] = useState<Good[]>([]);
 
   useEffect(() => {
     switch (sotedType) {
-      case GoodSortType.all:
+      case GoodSortType.Empty:
+        setGoods([]);
+        break;
+      case GoodSortType.All:
         goodsAPI.getAll().then(newGoods => setGoods(newGoods));
         break;
-      case GoodSortType.firsFive:
+      case GoodSortType.FirsFive:
         goodsAPI.get5First().then(newGoods => setGoods(newGoods));
         break;
-      case GoodSortType.redColor:
+      case GoodSortType.RedColor:
         goodsAPI.getRedGoods().then(newGoods => setGoods(newGoods));
         break;
     }
-  }, [sotedType]);
+  }, [sotedType, GoodSortType]);
 
   return (
     <div className="App">
@@ -38,7 +42,7 @@ export const App: React.FC = () => {
       <button
         type="button"
         data-cy="all-button"
-        onClick={() => setSortedType(GoodSortType.all)}
+        onClick={() => setSortedType(GoodSortType.All)}
       >
         Load all goods
       </button>
@@ -46,7 +50,7 @@ export const App: React.FC = () => {
       <button
         type="button"
         data-cy="first-five-button"
-        onClick={() => setSortedType(GoodSortType.firsFive)}
+        onClick={() => setSortedType(GoodSortType.FirsFive)}
       >
         Load 5 first goods
       </button>
@@ -54,12 +58,12 @@ export const App: React.FC = () => {
       <button
         type="button"
         data-cy="red-button"
-        onClick={() => setSortedType(GoodSortType.redColor)}
+        onClick={() => setSortedType(GoodSortType.RedColor)}
       >
         Load red goods
       </button>
 
-      {goods && <GoodsList goods={goods} />}
+      {goods.length && <GoodsList goods={goods} />}
     </div>
   );
 };
